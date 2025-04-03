@@ -14,6 +14,7 @@ class RegNet(nn.Module):
         self.return_idx = return_idx
         
     def forward(self, x):
+        print(self.return_idx)
         outputs = self.model(x, output_hidden_states = True)
         x = outputs.hidden_states[2:5]
         return x

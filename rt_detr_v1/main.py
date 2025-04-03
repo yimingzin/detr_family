@@ -9,13 +9,13 @@ import torch
 if __name__ == '__main__':
     yml_path = 'rt_detr_v1/configs/test_1.yml'
     cfg = YAMLConfig(yml_path)
-    print(GLOBAL_CONFIG)
     train_dataloder = cfg.train_dataloader
     samples, targets = next(iter(train_dataloder))
     print(samples.shape)
-    print(targets[0])
+    # print(targets[0])
     
     backbone = cfg.model
+    print(GLOBAL_CONFIG)
     out_backbone = backbone(samples)
     
     for i in out_backbone:
