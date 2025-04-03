@@ -3,8 +3,4 @@ __include__: [
   '../rtdetr/include/dataloader.yml',
 ]
 
-model: MLP
-
-MLP:
-  hidden_dim: 600
-  out_channels: 20
+model: RegNet

@@ -3,6 +3,7 @@ from src.core import YAMLConfig
 from src.core import GLOBAL_CONFIG
 import data.dataloader
 from play_model import *
+from src.nn import *
 import torch
 
 if __name__ == '__main__':
@@ -13,3 +14,9 @@ if __name__ == '__main__':
     samples, targets = next(iter(train_dataloder))
     print(samples.shape)
     print(targets[0])
+    
+    backbone = cfg.model
+    out_backbone = backbone(samples)
+    
+    for i in out_backbone:
+        print(i.shape)
