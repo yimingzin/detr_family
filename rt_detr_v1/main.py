@@ -13,7 +13,9 @@ if __name__ == '__main__':
     train_dataloder = cfg.train_dataloader
     samples, targets = next(iter(train_dataloder))
     print(samples.shape)
-    # print(targets[0])
+    # print(targets)
+    for i in targets:
+        print(i['labels'])
     
     '''
     backbone = cfg.model
