@@ -19,6 +19,7 @@ if __name__ == '__main__':
     
     
     '''
+    ###############################################    backbone Test    ###############################################
     backbone = cfg.model
     print(GLOBAL_CONFIG)
     out_backbone = backbone(samples)
@@ -41,9 +42,11 @@ if __name__ == '__main__':
     
 
     model_instance = cfg.model
-    output = model_instance(samples, targets = targets)
+    outputs = model_instance(samples, targets = targets)
     
-    for k, v in output.items():
+    
+    ###############################################    decoder Test    ###############################################
+    for k, v in outputs.items():
         print(f"\nKey: '{k}'") 
 
         if isinstance(v, torch.Tensor):
@@ -74,3 +77,22 @@ if __name__ == '__main__':
             # 其他类型
             print(f"  Type: {type(v)}")
             # print(f"  Value: {v}")
+    
+    
+    
+    '''
+    ###############################################    matcher Test    ###############################################
+    criterion_instance = cfg.criterion
+    matcher_idx = criterion_instance(outputs, targets)
+    for i, idx in enumerate(matcher_idx):
+        pred_indices = idx[0]
+        target_indices = idx[1]
+        original_gt_labels = targets[i]['labels']
+        
+        print(f'target_{i}: {idx} | origin target: {original_gt_labels[target_indices]}')
+    '''
+    
+    
+    criterion_instance = cfg.criterion
+    loss = criterion_instance(outputs, targets)
+    print(loss)
