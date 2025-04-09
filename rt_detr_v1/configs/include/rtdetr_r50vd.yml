@@ -1,43 +1,5 @@
-__include__: [
-  'dataset/coco_detection.yml',
-  '../rtdetr/include/dataloader.yml',
-]
+task: detection
 
-# model: PResNet
-
-# PResNet:
-#   depth: 50
-#   variant: d
-#   return_idx: [1, 2, 3]
-#   num_stages: 4
-#   freeze_norm: True
-#   pretrained: True
-
-# -------------------------------------------------
-# model: HybridEncoder
-
-# HybridEncoder:
-#   in_channels: [512, 1024, 2048]
-#   feat_strides: [8, 16, 32]
-
-#   # intra
-#   hidden_dim: 256
-#   use_encoder_idx: [2]
-#   num_encoder_layers: 1
-#   nhead: 8
-#   dim_feedforward: 1024
-#   dropout: 0.
-#   enc_act: 'gelu'
-#   pe_temperature: 10000
-  
-#   # cross
-#   expansion: 1.0
-#   depth_mult: 1
-#   act: 'silu'
-
-#   # eval
-#   eval_spatial_size: [640, 640]
-# -------------------------------------------------
 model: RTDETR
 criterion: SetCriterion
 postprocessor: RTDETRPostProcessor
@@ -101,6 +63,7 @@ use_focal_loss: True
 RTDETRPostProcessor:
   num_top_queries: 300
 
+
 SetCriterion:
   weight_dict: {loss_vfl: 1, loss_bbox: 5, loss_giou: 2,}
   losses: ['vfl', 'boxes', ]
@@ -113,3 +76,6 @@ SetCriterion:
     # use_focal_loss: True 
     alpha: 0.25
     gamma: 2.0
+
+
+
