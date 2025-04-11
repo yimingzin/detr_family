@@ -1,0 +1,91 @@
+__include__: [
+  './dataset/coco_detection.yml',
+  './runtime.yml',
+  './base/dataloader.yml',
+  './base/optimizer.yml',
+  './base/deim.yml'
+]
+
+output_dir: ./outputs/deim_hgnetv2_m_coco
+
+optimizer:
+  type: AdamW
+  params: 
+    -
+      params: '^(?=.*backbone)(?!.*bn).*$'
+      lr: 0.00004
+    - 
+      params: '^(?=.*(?:norm|bn)).*$'
+      weight_decay: 0.
+
+  lr: 0.0004
+  betas: [0.9, 0.999]
+  weight_decay: 0.0001
+
+
+# Increase to search for the optimal ema
+epoches: 102 # 120 + 4n
+
+## Our LR-Scheduler
+flat_epoch: 49    # 4 + epoch // 2, e.g., 40 = 4 + 72 / 2
+no_aug_epoch: 12
+
+## Our DataAug
+train_dataloader: 
+  dataset: 
+    transforms:
+      policy:
+        epoch: [4, 49, 90]   # list 
+
+  collate_fn:
+    mixup_epochs: [4, 49]
+    stop_epoch: 90
+  
+
+#####################################     HGNetv2     #####################################
+# model: HGNetv2
+
+# HGNetv2:
+#   name: 'B2'
+#   return_idx: [1, 2, 3]
+#   freeze_at: -1
+#   freeze_norm: False
+#   use_lab: True
+#   pretrained: True
+#   local_model_dir: ../RT-DETR-main/D-FINE/weight/hgnetv2/
+
+#####################################     PResNet     #####################################
+
+# model: PResNet
+
+# PResNet:
+#   depth: 50
+#   variant: d
+#   freeze_at: 0
+#   return_idx: [1, 2, 3]
+#   num_stages: 4
+#   freeze_norm: True
+#   pretrained: True 
+#   local_model_dir: ../RT-DETR-main/rtdetrv2_pytorch/INK1k/
+
+#####################################     HybridEncoder     #####################################
+
+model: HybridEncoder
+
+HybridEncoder:
+  in_channels: [384, 768, 1536]
+  feat_strides: [8, 16, 32]
+
+  # intra
+  hidden_dim: 256
+  use_encoder_idx: [2]
+  num_encoder_layers: 1
+  nhead: 8
+  dim_feedforward: 1024
+  dropout: 0.
+  enc_act: 'gelu'
+
+  # cross
+  expansion: 1.0
+  act: 'silu'
+  depth_mult: 0.67
