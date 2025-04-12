@@ -13,23 +13,24 @@ print(samples.shape)
 for i, v in enumerate(targets):
     print(f'target_{i} got labels: {v["labels"]}')
     
-    
-
 # backbone = cfg.model
 # out_backbone = backbone(samples)
      
 # for i in out_backbone:
 #     print(i.shape)
 
-    
+
 S3 = torch.rand(size=(2, 384, 80, 80))
 S4 = torch.rand(size=(2, 768, 40, 40))
 S5 = torch.rand(size=(2, 1536, 20, 20))
 
+# # N model
+# S4 = torch.rand(size=(2, 512, 40, 40))
+# S5 = torch.rand(size=(2, 1024, 20, 20))
+
 backbone_out = [S3, S4, S5]
 
 hybrid_encoder = cfg.model
-print(GLOBAL_CONFIG)
 out_hybrid_encoder = hybrid_encoder(backbone_out)
     
 for i in out_hybrid_encoder:
