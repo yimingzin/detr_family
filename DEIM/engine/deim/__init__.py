@@ -6,5 +6,6 @@ Modified from RT-DETR (https://github.com/lyuwenyu/RT-DETR)
 Copyright(c) 2023 lyuwenyu. All Rights Reserved.
 """
 
-
+from .deim import DEIM
 from .hybrid_encoder import HybridEncoder
+from .dfine_decoder import DFINETransformer
