@@ -141,6 +141,10 @@ train_dataloader:
 #####################################       model       #####################################
 model: DEIM
 
+use_focal_loss: True
+eval_spatial_size: [640, 640] # h w
+checkpoint_freq: 4    # save freq
+
 DEIM:
   backbone: HGNetv2
   encoder: HybridEncoder
@@ -212,5 +216,35 @@ DFINETransformer:
   num_layers: 4  # 5 6
   eval_idx: -1  # -2 -3
 
+
+#####################################       Criterion       #####################################
+criterion: DEIMCriterion
+postprocessor: PostProcessor
+
+DEIMCriterion:
+  weight_dict: {loss_vfl: 1, loss_bbox: 5, loss_giou: 2, loss_fgl: 0.15, loss_ddf: 1.5}
+  losses: ['vfl', 'boxes', 'local']
+  alpha: 0.75
+  gamma: 2.0
+  reg_max: 32
+
+  matcher:
+    type: HungarianMatcher
+    weight_dict: {cost_class: 2, cost_bbox: 5, cost_giou: 2}
+    alpha: 0.25
+    gamma: 2.0
+
 PostProcessor:
   num_top_queries: 300
+
+## DEIM Loss
+DEIMCriterion:
+  weight_dict: {loss_mal: 1, loss_bbox: 5, loss_giou: 2, loss_fgl: 0.15, loss_ddf: 1.5}
+  losses: ['mal', 'boxes', 'local']
+  gamma: 1.5
+
+  matcher:
+    type: HungarianMatcher
+    weight_dict: {cost_class: 2, cost_bbox: 5, cost_giou: 2}
+    alpha: 0.25
+    gamma: 2.0

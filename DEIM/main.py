@@ -107,3 +107,8 @@ for k, v in outputs.items():
 #     print(f'{k}: \n')
 #     for i in v:
 #         print(i)
+
+###############################################    Criterion    ###############################################
+criterion_instance = cfg.criterion
+loss = criterion_instance(outputs, targets)
+print(loss)

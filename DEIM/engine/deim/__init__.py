@@ -12,3 +12,4 @@ from .dfine_decoder import DFINETransformer
 
 from .matcher import HungarianMatcher
 from .postprocessor import PostProcessor
+from .deim_criterion import DEIMCriterion
