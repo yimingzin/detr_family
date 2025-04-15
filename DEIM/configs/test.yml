@@ -211,3 +211,6 @@ DFINETransformer:
 
   num_layers: 4  # 5 6
   eval_idx: -1  # -2 -3
+
+PostProcessor:
+  num_top_queries: 300

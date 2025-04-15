@@ -88,3 +88,22 @@ for k, v in outputs.items():
         # 其他类型
         print(f"  Type: {type(v)}")
         # print(f"  Value: {v}")
+
+###############################################    Matcher    ###############################################
+
+# from engine.deim.matcher import HungarianMatcher
+
+# weight_dict = {
+#     'cost_class': 2,
+#     'cost_bbox': 5,
+#     'cost_giou': 2
+# }
+
+# matcher_instance = HungarianMatcher(weight_dict, False)
+
+# matcher_result = matcher_instance(outputs, targets, return_topk=True)
+
+# for k, v in matcher_result.items():
+#     print(f'{k}: \n')
+#     for i in v:
+#         print(i)
